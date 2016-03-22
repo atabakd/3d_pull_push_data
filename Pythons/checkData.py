@@ -9,19 +9,19 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-pull_data = pd.read_csv(r'file:///home/atabak/Dropbox/affDataPreperation/clean-data/clean-pull.txt', 
+pull_data = pd.read_csv(r'clean-pull.txt', 
                          sep=' ',
                          header = None,
 #                         names = ['eff', 'tool', 'object', 'action', 'effects'],
                          )
 
-push_data = pd.read_csv(r'file:///home/atabak/Dropbox/affDataPreperation/clean-data/clean-push.txt', 
+push_data = pd.read_csv(r'clean-push.txt', 
                          sep=' ',
                          header = None,
 #                         names = ['eff', 'tool', 'object', 'action', 'effects'],
                          )
                          
-desc_data = pd.read_csv(r'file:///home/atabak/Dropbox/affDataPreperation/clean-data/desc/descDataMin.txt', sep=' ', 
+desc_data = pd.read_csv(r'descDataMin.txt', sep=' ', 
                         header = None,
                         usecols=range(12),
                         )
