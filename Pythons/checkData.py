@@ -26,7 +26,8 @@ desc_data = pd.read_csv(r'descDataMin.txt', sep=' ',
                         usecols=range(12),
                         )
                         
-desc_dic = {obj_name:np.asanyarray(desc_data.ix[desc_data.ix[:,1]==obj_name,2:]) for obj_name in desc_data.ix[:,1].unique()}
+desc_dic = {obj_name:np.asanyarray(desc_data.ix[desc_data.ix[:,1]==obj_name,2:]) 
+                for obj_name in desc_data.ix[:,1].unique()}
 for key in desc_dic.keys():
     if key == 'rake' or key == 'stick':
         desc_dic[key] = desc_dic[key][:10,5:]
@@ -39,9 +40,18 @@ effects_pull = np.asanyarray(pull_data.ix[:,[24,25]])-np.asanyarray(pull_data.ix
 #effects = np.asanyarray(push_data.ix[:,[24,25]])-np.asanyarray(push_data.ix[:,[4,5]])
 effects_push = np.asanyarray(push_data.ix[:,[24,25]])-np.asanyarray(push_data.ix[:,[4,5]])
 #effects=np.vstack((effects,np.asanyarray(push_data.ix[:,[24,25]])-np.asanyarray(push_data.ix[:,[4,5]])))
+
+effects_pull_rake = effects_pull[np.where(pull_data.ix[:,1]=='rake'),:]
+effects_pull_rake = effects_pull_rake[0,...]
+
+effects_pull_stick= effects_pull[np.where(pull_data.ix[:,1]=='stick'),:]
+effects_pull_stick = effects_pull_stick[0,...]
+
 plt.close()
-plt.scatter(effects_push[:,0],effects_push[:,1])
+plt.scatter(effects_pull_stick[:,0],effects_pull_stick[:,1])
+plt.scatter(effects_pull_rake[:,0],effects_pull_rake[:,1],color='red')
 plt.show()
+plt.savefig('effects.png')
 
         
 data_minimal = np.zeros([1,13])
@@ -99,9 +109,9 @@ for key in desc_dic.keys():
                     row = np.append(row, 4)
                     row = np.append(row, eff_push)
                     data=np.vstack((data,row))
-                
-        
-        
+#                
+#        
+#        
 data_minimal = data_minimal[1:,:]
 data = data[1:,:]        
 
@@ -109,3 +119,7 @@ np.savetxt('data_minimal.txt', data_minimal, fmt=['%.7f', '%.7f','%.7f','%.7f','
       
 np.savetxt('data.txt', data, fmt=['%.7f', '%.7f','%.7f','%.7f','%.7f','%.7f','%.7f','%.7f','%.7f','%.7f', '%d', '%.7f', '%.7f'])
                 
+data_pull = data[np.where(data[:,10]==3),11:][0,...]            
+plt.figure()
+plt.scatter(data_pull[:,0],data_pull[:,1])
+plt.show()
